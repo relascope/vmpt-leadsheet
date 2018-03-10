@@ -1,4 +1,4 @@
-
+import abjad
 
 class Leadsheet():
 
@@ -23,18 +23,24 @@ class Leadsheet():
 
         for i in range(0,len(self.chords)):
 
-            duration = self.getQuantifizedDuration(i)
-            chord = chordinoChordToLy(self.chords[i][0], self.quantize)
-
+            duration = self.getQuantifizedDuration(i,  scoreDuration)
             if duration < 1:
                 #todojoy fix bug
                 duration = 1
                 #raise ValueError('A very specific bad thing happened.')
 
+            dur = abjad.Duration(duration,  self.quantize)
+
+            chord = chordinoChordToLy(self.chords[i][0], dur.lilypond_duration_string)
+            
+            self.sheet += ' ' + chord
+
+
             # chords are written as many times they accure,
             # e.g. a half note is written as two quarters (if quantize is four)
-            for q in range(0, int(round(duration))):
-                self.sheet += ' ' + chord
+            #for q in range(0, int(round(duration))):
+            #    self.sheet += ' ' + chord
+            
 
             scoreDuration += int(duration)
 
@@ -49,8 +55,7 @@ class Leadsheet():
         if position == len(self.chords) -1:
             return self.quantize
 
-        rTime = self.chords[position + 1][1] - self.chords[position][1]
-        time = rTime.sec + float(rTime.nsec / 1000000000.)
+        time = self.chords[position + 1][1] - self.chords[position][1]
 
         return self.getLyDurationFromTime(time)
 
@@ -60,18 +65,24 @@ class Leadsheet():
 
         return round(60. * self.measureDuration / self.bpm / time)
 
-    def getQuantifizedDuration(self, position):
+    def getQuantifizedDuration(self, position,  lyScoreDuration):
         if position == len(self.chords) - 1:
             return 1
 
-        rTime = self.chords[position + 1][1] - self.chords[position][1]
-        time = rTime.sec + float(rTime.nsec / 1000000000.)
+        nextTime = self.chords[position + 1][1]
+        
+        nextLyPosition = self.getQuantifizedDurationFromTime(nextTime)
+        return nextLyPosition - lyScoreDuration
+        
 
-        return self.getQuantifizedDurationFromTime(time)
+        #rTime = self.chords[position + 1][1] - self.chords[position][1]
+        #time = rTime.sec + float(rTime.nsec / 1000000000.)
+
+        #return self.getQuantifizedDurationFromTime(time)
 
     def getQuantifizedDurationFromTime(self, time):
         # title is wrong . needs quantize.....
-        return (self.quantize/4.) *  time * self.bpm / 60.
+        return int(round((self.quantize/4.) *  time * self.bpm / 60.))
 
     def addChord(self, chord, timestamp):
         self.chords.append([chord,timestamp])

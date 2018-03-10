@@ -1,7 +1,58 @@
 import unittest
+
+import re
+
 from leadsheet import *
 
 class TestLeadsheet(unittest.TestCase):
+    
+    def getChordsFromLyString(self,  sheet):
+        cpos = sheet.find('chordmode')
+        cstart  = sheet.find('{',  cpos) + 1
+        cend = sheet.find('}',  cstart)        
+        return sheet[cstart:cend].split()
+    
+    def getDurations(self,  sheet):
+        chords = self.getChordsFromLyString(sheet)
+
+        durations = list()
+        
+        for c in chords:
+            durs = re.findall(r'\d+',  c)
+            durations.append(int(durs[0]))
+
+        return durations
+    
+    def testScoreDurationQuarter(self):
+        
+        ls = Leadsheet()
+        
+        ls.addChord('a',  0.)
+        ls.addChord('b',  1.)
+        ls.addChord('c',  2.)
+        ls.addChord('d',  3.)
+                
+        durations = self.getDurations(ls.getSheet())
+        
+        for d in durations:
+            self.assertEqual(4,  d)
+            
+    def testScoreDurations(self):
+        
+        ls = Leadsheet()
+        
+        ls.addChord('a',  0.)
+        ls.addChord('b',  1.5)
+        ls.addChord('c',  4.)
+        ls.addChord('d',  6.)
+                
+        durations = self.getDurations(ls.getSheet())
+        
+        print ls.getSheet()
+        
+        self.assertEqual(2,  durations[0])
+        self.assertEqual(2,  durations[1])
+        self.assertEqual(2,  durations[2])
 
     def testLyDurationBpm(self):
 

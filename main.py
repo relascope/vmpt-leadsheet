@@ -28,7 +28,10 @@ def main(argv):
     ls = leadsheet.Leadsheet(title, bpm)
 
     for c in chords:
-        ls.addChord(c['label'], c['timestamp'])
+        rTime = c['timestamp']
+        timestamp =         time = rTime.sec + float(rTime.nsec / 1000000000.)
+
+        ls.addChord(c['label'], timestamp)
 
     if outFile == "":
         ls.printSheet()
