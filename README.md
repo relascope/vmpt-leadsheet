@@ -8,8 +8,9 @@ Development
 Written in Python
 
 Python libraries 
-- librosa
 - vamp
+- abjad
+- librosa
 
 Vamp Plugins
 - nnls-chroma
