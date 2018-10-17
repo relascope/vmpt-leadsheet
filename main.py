@@ -7,7 +7,7 @@ def printUsage(argv):
     print "Usage: " + argv[0] + " InputAudioFile + [OutputLilypondFile]"
 
 def main(argv):
-    if len(argv) < 2 || len(argv) > 2:
+    if len(argv) < 2 or len(argv) > 2:
         printUsage(argv)
         exit(0)
 
