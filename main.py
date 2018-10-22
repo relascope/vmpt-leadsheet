@@ -4,7 +4,7 @@ import sys
 import os
 
 def printUsage(argv):
-    print "Usage: " + argv[0] + " InputAudioFile + [OutputLilypondFile]"
+    print ("Usage: " + argv[0] + " InputAudioFile + [OutputLilypondFile]")
 
 def main(argv):
     if len(argv) < 2 or len(argv) > 2:

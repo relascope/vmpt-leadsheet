@@ -89,7 +89,7 @@ class Leadsheet():
 
     def printSheet(self):
         self.writeSheet()
-        print self.sheet
+        print (self.sheet)
         
     def getSheet(self):
         self.writeSheet()
