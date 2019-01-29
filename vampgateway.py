@@ -41,8 +41,8 @@ def main(argv):
     bpm = gw.getBpmFromFile(filename)
     chords = gw.getChordsFromFile(filename)
 
-    print "BPM: " + bpm
-    print chords
+    print ("BPM: " + bpm)
+    print (chords)
 
 if __name__ == "__main__":
     main(sys.argv)

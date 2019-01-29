@@ -3,16 +3,18 @@ Leadsheet
 Leadsheet converts audio music files into leadsheets printing the chords. 
 The leadsheet is written or printed using [Lilypond](http://www.lilypond.org) format. 
 
-Development
+Install
 ---------------------
-Written in Python
+Requires Python3
 
-Python libraries 
-- vamp
-- abjad
-- librosa
+    pip install --upgrade pip
+    pip install numpy
+    pip install --trusted-host pypi.python.org -r requirements.txt
 
-Vamp Plugins
+Required Vamp Plugins can be downloaded from [https://www.vamp-plugins.org/download.html] and must be extracted to the directory $HOME/vamp
 - nnls-chroma
 - vamp-example-plugins
 
+Usage
+---------------------
+    ./vmpt-leadsheet.py InputAudioFile + [OutputLilypondFile] 

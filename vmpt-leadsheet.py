@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import leadsheet
 import vampgateway
 import sys
