@@ -1,4 +1,5 @@
 numpy
-vamp
 abjad
 librosa
+tkinter
+vamp
