@@ -7,6 +7,8 @@ class VampGateway():
 
     def __init__(self):
         self.loadedFile = ''
+        self.data = None
+        self.rate = None
 
     def getBpmFromFile(self,  filename):
         if self.loadedFile != filename:
@@ -28,21 +30,7 @@ class VampGateway():
         return self.getChords(self.data, self.rate)
 
     def getChords(self,  data, rate):
-        chorddata = vamp.collect(data, rate, "nnls-chroma:chordino", "simplechord", {'useNNLS':1, 'rollon':0, 'tuningmode':0, 'whitening':1,
-        's':0.699999988, 'boostn':0.100000001,  'usehartesyntax':1.0})
+        # TO Watch: vamp doesn't find specific plugin simplechord, hopefully it will stay the default plugin in chordino
+        chorddata = vamp.collect(data=data, sample_rate=rate, plugin_key="nnls-chroma:chordino", parameters = {'useNNLS':1, 'usehartesyntax':1.0})
 
         return chorddata['list']
-
-def main(argv):
-    filename = sys.argv[1]
-
-    gw = VampGateway()
-
-    bpm = gw.getBpmFromFile(filename)
-    chords = gw.getChordsFromFile(filename)
-
-    print ("BPM: " + bpm)
-    print (chords)
-
-if __name__ == "__main__":
-    main(sys.argv)

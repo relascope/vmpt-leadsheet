@@ -17,4 +17,7 @@ Required Vamp Plugins can be downloaded from [https://www.vamp-plugins.org/downl
 
 Usage
 ---------------------
-    ./vmpt-leadsheet.py InputAudioFile + [OutputLilypondFile] 
+    ./vmpt-leadsheet.py InputAudioFile + [OutputScoreFile] 
+    
+    If OutputScoreFile is missing, the output is written to STDOUT
+    If both arguments are missing, a graphical user interface is provided

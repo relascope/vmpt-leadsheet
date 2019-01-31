@@ -29,18 +29,20 @@ class Leadsheet():
                 duration = 1
                 #raise ValueError('A very specific bad thing happened.')
 
+
+            # TODO BUG abjac doesnt work with durations greater one MEASURE 11/2
             dur = abjad.Duration(duration,  self.quantize)
 
+            while duration > self.quantize:
+                tmpdur = abjad.Duration(self.quantize, self.quantize)
+                chord = chordinoChordToLy(self.chords[i][0], tmpdur.lilypond_duration_string)
+                self.sheet += ' ' + chord
+                duration = duration - self.quantize
+                dur = abjad.Duration(duration, self.quantize)
+                scoreDuration += int(duration)
+            # DUPLICATE CODE ABOVE extract add chord
             chord = chordinoChordToLy(self.chords[i][0], dur.lilypond_duration_string)
-            
             self.sheet += ' ' + chord
-
-
-            # chords are written as many times they accure,
-            # e.g. a half note is written as two quarters (if quantize is four)
-            #for q in range(0, int(round(duration))):
-            #    self.sheet += ' ' + chord
-            
 
             scoreDuration += int(duration)
 
